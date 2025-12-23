@@ -34,17 +34,25 @@
 
             const NortheasternLogo = () => (
                 <img 
-                    src="https://upload.wikimedia.org/wikipedia/en/thumb/5/50/Northeastern_seal.svg/1200px-Northeastern_seal.svg.png" 
+                    src="https://brand.northeastern.edu/wp-content/uploads/4_BlackOnColor.png" 
                     alt="Northeastern University" 
                     className="w-16 h-16 object-contain"
+                    onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23C8102E' stroke='white' stroke-width='4'/%3E%3Ctext x='50' y='60' text-anchor='middle' fill='white' font-size='32' font-weight='bold' font-family='Arial'%3ENU%3C/text%3E%3C/svg%3E";
+                    }}
                 />
             );
 
             const MarshallLogo = () => (
                 <img 
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Marshall_Thundering_Herd_logo.svg/1200px-Marshall_Thundering_Herd_logo.svg.png" 
+                    src="https://www.marshall.edu/ucomm/files/Marshall-University-logo-green.png" 
                     alt="Marshall University" 
                     className="w-16 h-16 object-contain"
+                    onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%2300b140' stroke='white' stroke-width='4'/%3E%3Ctext x='50' y='60' text-anchor='middle' fill='white' font-size='32' font-weight='bold' font-family='Arial'%3EMU%3C/text%3E%3C/svg%3E";
+                    }}
                 />
             );
 
