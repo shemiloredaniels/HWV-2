@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HWV Revitalization Playbook</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.3s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const SwimLaneDiagram = () => {
+            const [expandedOrg, setExpandedOrg] = useState({
+                northeastern: true,
+                marshall: true,
+                p3: true
+            });
+            const [selectedConnection, setSelectedConnection] = useState(null);
+
+            const NortheasternLogo = () => (
+                <img 
+                    src="https://upload.wikimedia.org/wikipedia/en/thumb/5/50/Northeastern_seal.svg/1200px-Northeastern_seal.svg.png" 
+                    alt="Northeastern University" 
+                    className="w-16 h-16 object-contain"
+                />
+            );
+
+            const MarshallLogo = () => (
+                <img 
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Marshall_Thundering_Herd_logo.svg/1200px-Marshall_Thundering_Herd_logo.svg.png" 
+                    alt="Marshall University" 
+                    className="w-16 h-16 object-contain"
+                />
+            );
+
+            const P3Logo = () => (
+                <img 
+                    src="https://p3portal.com/wp-content/uploads/2024/04/P3-logo-reverse.webp" 
+                    alt="P3 Portal" 
+                    className="w-16 h-16 object-contain"
+                />
+            );
+
+            const toggleOrg = (org) => {
+                setExpandedOrg(prev => ({...prev, [org]: !prev[org]}));
+            };
+
+            const connectionInfo = {
+                dibiP3: {
+                    title: "DIBI ↔ P3 Portal Collaboration",
+                    description: "DIBI manages a collaborative relationship with P3 Portal. This horizontal partnership ensures alignment between research activities and investment facilitation.",
+                    type: "Peer Collaboration"
+                },
+                dibiMarshall: {
+                    title: "DIBI ↘ Marshall Support",
+                    description: "DIBI provides diagonal support to Marshall University, managing the relationship and ensuring coordination of data collection efforts in Huntington, WV.",
+                    type: "Strategic Support"
+                },
+                griMarshall: {
+                    title: "GRI → Marshall AMC Support",
+                    description: "GRI directly supports Marshall's Advanced Manufacturing Center by developing interview templates and assisting with Tier 2 indicator collection.",
+                    type: "Technical Support"
+                }
+            };
+
+            const ArrowRight = () => <span>→</span>;
+            const ArrowDownRight = () => <span>↘</span>;
+            const ChevronUp = ({ className, style }) => <span className={className} style={style}>▲</span>;
+            const ChevronDown = ({ className, style }) => <span className={className} style={style}>▼</span>;
+            const X = ({ className }) => <span className={className}>✕</span>;
+
+            return (
+                <div className="w-full h-full bg-gray-50 p-8 overflow-auto">
+                    <h1 className="text-3xl font-bold text-center mb-2 text-gray-800">
+                        HWV Revitalization Playbook
+                    </h1>
+                    <p className="text-center text-gray-600 mb-4">Organizational Responsibilities & Relationships</p>
+                    <p className="text-center text-sm text-gray-500 mb-8 italic">
+                        Click logos to expand/collapse • Click connection lines to learn more
+                    </p>
+                    
+                    <div className="relative">
+                        <svg className="absolute top-0 left-0 w-full h-full" style={{zIndex: 1}}>
+                            <line 
+                                x1="50%" y1="180" x2="50%" y2="620" 
+                                stroke="#2563eb" strokeWidth="4" strokeDasharray="8,4"
+                                className="cursor-pointer hover:opacity-70 transition-opacity"
+                                onClick={() => setSelectedConnection('dibiP3')}
+                            />
+                            <text 
+                                x="51%" y="400" fill="#2563eb" fontSize="14" fontWeight="bold"
+                                className="cursor-pointer"
+                                onClick={() => setSelectedConnection('dibiP3')}
+                            >
+                                ↔ Collaboration
+                            </text>
+                            
+                            <line 
+                                x1="45%" y1="200" x2="35%" y2="420" 
+                                stroke="#f59e0b" strokeWidth="4" strokeDasharray="8,4"
+                                className="cursor-pointer hover:opacity-70 transition-opacity"
+                                onClick={() => setSelectedConnection('dibiMarshall')}
+                            />
+                            <text 
+                                x="38%" y="310" fill="#f59e0b" fontSize="14" fontWeight="bold"
+                                className="cursor-pointer"
+                                onClick={() => setSelectedConnection('dibiMarshall')}
+                            >
+                                ↘ Support
+                            </text>
+                            
+                            <line 
+                                x1="25%" y1="350" x2="25%" y2="440" 
+                                stroke="#00b140" strokeWidth="4" strokeDasharray="8,4"
+                                className="cursor-pointer hover:opacity-70 transition-opacity"
+                                onClick={() => setSelectedConnection('griMarshall')}
+                            />
+                            <text 
+                                x="26%" y="395" fill="#00b140" fontSize="12" fontWeight="bold"
+                                className="cursor-pointer"
+                                onClick={() => setSelectedConnection('griMarshall')}
+                            >
+                                ↓ Support
+                            </text>
+                        </svg>
+
+                        <div className="space-y-6 relative" style={{zIndex: 2}}>
+                            <div 
+                                className="border-2 rounded-lg p-6 transition-all shadow-md"
+                                style={{backgroundColor: '#fef2f2', borderColor: '#C8102E'}}
+                            >
+                                <div 
+                                    className="flex items-center justify-between mb-4 cursor-pointer hover:opacity-80 transition-opacity"
+                                    onClick={() => toggleOrg('northeastern')}
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <NortheasternLogo />
+                                        <h2 className="text-2xl font-bold" style={{color: '#C8102E'}}>Northeastern University</h2>
+                                    </div>
+                                    {expandedOrg.northeastern ? 
+                                        <ChevronUp className="w-6 h-6" style={{color: '#C8102E'}} /> : 
+                                        <ChevronDown className="w-6 h-6" style={{color: '#C8102E'}} />
+                                    }
+                                </div>
+                                
+                                {expandedOrg.northeastern && (
+                                    <div className="ml-6 space-y-4 animate-fadeIn">
+                                        <div className="bg-white rounded-lg p-4 border-2 shadow-sm" style={{borderColor: '#C8102E'}}>
+                                            <h3 className="text-lg font-bold mb-2" style={{color: '#C8102E'}}>
+                                                Defense Industrial Base Institute (DIBI)
+                                            </h3>
+                                            <ul className="text-sm text-gray-700 space-y-1 ml-6">
+                                                <li>• Convener of stakeholders and meetings</li>
+                                                <li>• Collecting publicly available data for baseline assessment</li>
+                                                <li className="flex items-center gap-2 font-semibold" style={{color: '#2563eb'}}>
+                                                    <ArrowRight />
+                                                    Managing relationships with P3 Portal (horizontal)
+                                                </li>
+                                                <li className="flex items-center gap-2 font-semibold text-amber-700">
+                                                    <ArrowDownRight />
+                                                    Managing relationships with Marshall (diagonal)
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <div className="ml-12 space-y-3 border-l-4 pl-6" style={{borderColor: '#C8102E'}}>
+                                            <p className="text-xs font-semibold text-gray-500 uppercase">Subcontracts ↓</p>
+                                            
+                                            <div className="bg-white rounded-lg p-3 border shadow-sm" style={{borderColor: '#C8102E'}}>
+                                                <h4 className="font-bold mb-1" style={{color: '#C8102E'}}>
+                                                    Global Resilience Institute (GRI)
+                                                </h4>
+                                                <ul className="text-sm text-gray-700 space-y-1">
+                                                    <li>• Helping Marshall collect Tier 2 indicators</li>
+                                                    <li className="flex items-center gap-2 font-semibold" style={{color: '#00b140'}}>
+                                                        <ArrowRight />
+                                                        Providing interview template support to Marshall AMC
+                                                    </li>
+                                                    <li className="text-xs italic text-gray-500">(Privately held data & qualitative community engagement)</li>
+                                                </ul>
+                                            </div>
+
+                                            <div className="bg-white rounded-lg p-3 border shadow-sm" style={{borderColor: '#C8102E'}}>
+                                                <h4 className="font-bold mb-1" style={{color: '#C8102E'}}>
+                                                    Kostas Research Institute
+                                                </h4>
+                                                <ul className="text-sm text-gray-700 space-y-1">
+                                                    <li>• Data visualization (Tier 1 & 2 indicators)</li>
+                                                    <li>• Developing data infrastructure and pipelines</li>
+                                                    <li>• Ensuring data quality, consistency, and standardization</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+
+                            <div 
+                                className="border-2 rounded-lg p-6 transition-all shadow-md"
+                                style={{backgroundColor: '#e6f7ee', borderColor: '#00b140'}}
+                            >
+                                <div 
+                                    className="flex items-center justify-between mb-4 cursor-pointer hover:opacity-80 transition-opacity"
+                                    onClick={() => toggleOrg('marshall')}
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <MarshallLogo />
+                                        <h2 className="text-2xl font-bold" style={{color: '#00b140'}}>Marshall University</h2>
+                                    </div>
+                                    {expandedOrg.marshall ? 
+                                        <ChevronUp className="w-6 h-6" style={{color: '#00b140'}} /> : 
+                                        <ChevronDown className="w-6 h-6" style={{color: '#00b140'}} />
+                                    }
+                                </div>
+                                
+                                {expandedOrg.marshall && (
+                                    <div className="ml-6 animate-fadeIn">
+                                        <div className="bg-white rounded-lg p-4 border-2 shadow-sm" style={{borderColor: '#00b140'}}>
+                                            <h3 className="text-lg font-bold mb-2" style={{color: '#00b140'}}>
+                                                Advanced Manufacturing Center
+                                            </h3>
+                                            <ul className="text-sm text-gray-700 space-y-1 ml-6">
+                                                <li>• <span className="font-semibold">Prime</span> of data collection in Huntington, WV</li>
+                                                <li>• Collecting Tier II indicators</li>
+                                                <li>• Additional indicators for specific needs</li>
+                                                <li>• <span className="underline cursor-pointer" style={{color: '#00b140'}}>Link to SOW</span></li>
+                                            </ul>
+                                            <div className="mt-3 p-3 rounded border-l-4" style={{background: 'linear-gradient(to right, #e6f7ee, #fef3c7)', borderColor: '#00b140'}}>
+                                                <p className="text-sm font-semibold text-gray-800">Receiving Support From:</p>
+                                                <p className="text-sm" style={{color: '#00b140'}}>↑ GRI: Interview template development</p>
+                                                <p className="text-sm" style={{color: '#C8102E'}}>↖ DIBI: Relationship management</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+
+                            <div 
+                                className="border-2 rounded-lg p-6 transition-all shadow-md"
+                                style={{backgroundColor: '#eff6ff', borderColor: '#2563eb'}}
+                            >
+                                <div 
+                                    className="flex items-center justify-between mb-4 cursor-pointer hover:opacity-80 transition-opacity"
+                                    onClick={() => toggleOrg('p3')}
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <P3Logo />
+                                        <h2 className="text-2xl font-bold" style={{color: '#2563eb'}}>P3 Portal</h2>
+                                    </div>
+                                    {expandedOrg.p3 ? 
+                                        <ChevronUp className="w-6 h-6" style={{color: '#2563eb'}} /> : 
+                                        <ChevronDown className="w-6 h-6" style={{color: '#2563eb'}} />
+                                    }
+                                </div>
+                                
+                                {expandedOrg.p3 && (
+                                    <div className="ml-6 space-y-4 animate-fadeIn">
+                                        <div className="bg-white rounded-lg p-4 border-2 shadow-sm" style={{borderColor: '#2563eb'}}>
+                                            <h3 className="text-lg font-bold mb-2" style={{color: '#2563eb'}}>
+                                                Main Responsibilities
+                                            </h3>
+                                            <ul className="text-sm text-gray-700 space-y-1 ml-6">
+                                                <li>• Solution evaluation (validate service provider capability/capacity)</li>
+                                                <li>• Deal shaping (investor vetting & negotiation)</li>
+                                                <li>• Risk assessment & mitigation planning</li>
+                                            </ul>
+                                            <div className="mt-3 p-2 rounded border-l-4" style={{backgroundColor: '#eff6ff', borderColor: '#2563eb'}}>
+                                                <p className="text-sm font-semibold" style={{color: '#2563eb'}}>↑ Collaborating with DIBI</p>
+                                            </div>
+                                        </div>
+
+                                        <div className="ml-12 border-l-4 pl-6" style={{borderColor: '#2563eb'}}>
+                                            <p className="text-xs font-semibold text-gray-500 uppercase mb-2">Subcontract ↓</p>
+                                            <div className="bg-white rounded-lg p-3 border shadow-sm" style={{borderColor: '#2563eb'}}>
+                                                <h4 className="font-bold mb-1" style={{color: '#2563eb'}}>SupplyTrust</h4>
+                                                <p className="text-sm text-gray-700">• Supply chain/manufacturers assessment</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+
+                    {selectedConnection && (
+                        <div 
+                            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+                            onClick={() => setSelectedConnection(null)}
+                        >
+                            <div 
+                                className="bg-white rounded-lg p-6 max-w-md mx-4 shadow-xl"
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                <div className="flex justify-between items-start mb-4">
+                                    <h3 className="text-xl font-bold text-gray-800">
+                                        {connectionInfo[selectedConnection].title}
+                                    </h3>
+                                    <button 
+                                        onClick={() => setSelectedConnection(null)}
+                                        className="text-gray-500 hover:text-gray-700"
+                                    >
+                                        <X className="w-6 h-6" />
+                                    </button>
+                                </div>
+                                <div className="mb-4">
+                                    <span className="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold">
+                                        {connectionInfo[selectedConnection].type}
+                                    </span>
+                                </div>
+                                <p className="text-gray-700 leading-relaxed">
+                                    {connectionInfo[selectedConnection].description}
+                                </p>
+                                <button
+                                    onClick={() => setSelectedConnection(null)}
+                                    className="mt-6 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                                >
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<SwimLaneDiagram />);
+    </script>
+</body>
+</html>
